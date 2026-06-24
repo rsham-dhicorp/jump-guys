@@ -1041,6 +1041,22 @@
             keys.right = false;
             keys.space = false;
         });
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                keys.left = false;
+                keys.right = false;
+                keys.space = false;
+            }
+        });
+        // Polling fallback: clear keys that are no longer physically held
+        // Browsers can miss keyup events when focus shifts
+        setInterval(function() {
+            if (!document.hasFocus()) {
+                keys.left = false;
+                keys.right = false;
+                keys.space = false;
+            }
+        }, 200);
 
         // ===== HELPERS =====
         function getGoalY() {
